@@ -33,8 +33,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   'POST /api/pet/' : 'PetController.createPet',
-  'GET /api/pet/:id' : 'PetController.getPet',
-  'PATCH /api/pet/:id' : 'PetController.patchPet',
-  'POST /api/pet/:id' : 'PetController.deletePet',
+  'GET /api/pet/' : 'PetController.getPet',
+  'PUT /api/pet/' : 'PetController.updatePet',
+  'DELETE /api/pet/:id' : 'PetController.deletePet',
 
 };
