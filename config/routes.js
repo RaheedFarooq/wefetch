@@ -32,6 +32,9 @@ module.exports.routes = {
   * not match any of those, it is matched against static assets.             *
   *                                                                          *
   ***************************************************************************/
-
+  'POST /api/pet/' : 'PetController.createPet',
+  'GET /api/pet/:id' : 'PetController.getPet',
+  'PATCH /api/pet/:id' : 'PetController.patchPet',
+  'POST /api/pet/:id' : 'PetController.deletePet',
 
 };
