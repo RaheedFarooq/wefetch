@@ -9,9 +9,7 @@ module.exports = {
 
   attributes: {
     name: { type: "string", columnType: "varchar(255)" },
-    owner: {
-      model: 'user'
-    }
+    owner: { type: "number", columnType: "integer" },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

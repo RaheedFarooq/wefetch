@@ -9,6 +9,9 @@ module.exports = {
 
   attributes: {
     details: { type: 'json', allowNull: false },
+    userId: {
+      model: 'user'
+    }
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
