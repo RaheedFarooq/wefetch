@@ -22,13 +22,19 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    fullName: { type: "string", columnType: "varchar(255)", required: true },
-    username: {
+    email: {
       type: "string",
       columnType: "varchar(255)",
       allowNull: true,
       unique: true,
+      isEmail: true,
     },
+    // phoneNumber: {
+    //   type: "string",
+    //   columnType: "varchar(255)",
+    //   allowNull: true,
+    // },
+    fullName: { type: "string", columnType: "varchar(255)", required: true },
     password: { type: "string", columnType: "varchar(255)", allowNull: false },
     facilityId: { type: "number", columnType: "integer", allowNull: true },
     // pets: {

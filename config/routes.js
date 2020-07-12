@@ -21,6 +21,17 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
 
+  'GET /api/user' : 'UserController.getUser',
+
+  'GET /api/company' : 'CompanyController.getCompanies',
+  'GET /api/company/:id/facility' : 'FacilityController.getFacility',
+
+  'PATCH /api/user' : 'UserController.updateUser',
+  'POST /api/user/signup' : 'UserController.signup',
+  'POST /api/user/login' : 'UserController.login',
+
+  'POST /api/booking/create' : 'BookingController.createBooking',
+
 
   /***************************************************************************
   *                                                                          *

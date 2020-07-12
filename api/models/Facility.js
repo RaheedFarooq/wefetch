@@ -10,22 +10,19 @@ module.exports = {
   attributes: {
     name: { type:'string', columnType:'varchar(255)' },
     city: { type:'string', columnType:'varchar(255)' },
-    lat: { type: 'number', columnType: 'decimal' },
-    long: { type: 'number', columnType: 'decimal' },
-    pickRadius: { type: 'number', columnType: 'integer' },
-    dropRadius: { type: 'number', columnType: 'integer' },
-    distanceAlert: { type: 'boolean', defaultsTo: true },
+    lat: { type: 'number', columnType: 'decimal(16,8)' },
+    long: { type: 'number', columnType: 'decimal(16,8)' },
+    radius: { type: 'number', columnType: 'decimal(16,8)' },
+    pickRadius: { type: 'number', columnType: 'decimal(16,8)' },
+    dropRadius: { type: 'number', columnType: 'decimal(16,8)' },
+    isHereNowActive: { type: 'boolean', columnType:'boolean', defaultsTo:false },
     phone: { type:'string', columnType:'varchar(255)' },
     email: { type:'string', columnType:'varchar(255)' },
-    ContactType:{
-      type: 'string',
-      columnType: 'varchar(255)',
-      // required: true,
-      isIn: ['EMAIL', 'PHONE']
-    },
+    contactType: { type: 'number', columnType: 'integer', defaultsTo:0 },
     companyId: {
       model:'company'
     }
+
 
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
