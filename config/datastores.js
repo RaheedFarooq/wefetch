@@ -49,7 +49,7 @@ module.exports.datastores = {
     *                                                                          *
     ***************************************************************************/
     adapter: 'sails-mysql',
-    url: 'mysql://thewebm9_test:asdf123@@35.213.179.121:3306/thewebm9_wefetch',
+    url: 'mysql://thewebm9_ahmad:ahmadasdf123@@35.213.179.121:3306/thewebm9_wefetch_dev_ahmad',
 
   },
 
