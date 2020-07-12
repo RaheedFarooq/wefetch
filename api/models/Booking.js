@@ -9,6 +9,8 @@ module.exports = {
 
   attributes: {
     details: { type: 'json', allowNull: false },
+    // recurring: { type: 'string', allowNull: true, columnType:'varchar(255)' },
+    // dates: { type: 'string', allowNull: true, columnType:'varchar(255)' },
     userId: {
       model: 'user'
     }

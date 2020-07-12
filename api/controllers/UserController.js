@@ -22,8 +22,8 @@ module.exports = {
         password: hashPassword
       }).fetch();
       delete user.password;
-      await Pet.create({name: petName, owner:user.id});
-      if (user) return res.status(201).send({ statusCode: 200, data: { user }, message: "Signup Successful" });
+      await Pet.create({ name: petName, owner: user.id });
+      if (user) return res.status(200).send({ statusCode: 200, data: { user }, message: "Signup Successful" });
     }
     catch (err) {
       console.log(err);
@@ -58,32 +58,51 @@ module.exports = {
   },
 
   getUser: async (req, res) => {
-    const user = await User.findOne({ id: req.params.id });
-    console.log(user);
+
+    let userId = parseInt(req.headers.user);
+
+    if (!userId) return res.status(500).send({ statusCode: 500, message: 'Oops! Something went wrong' });
+
+    const user = await User.findOne({ id: userId });
+
+    if (!user) return res.status(500).send({ statusCode: 500, message: 'User does not exist.' });
+
     if (user.facilityId) {
       const facility = await Facility.findOne({ id: user.facilityId });
       user.selectedFacility = facility ? facility : {};
       user.selectedCompanyId = facility ? facility.companyId : {};
       delete user.facilityId;
     }
-    try{
+    try {
+      const book = await Booking.findOne({ userId });
+      console.log(JSON.parse(book.details));
 
-      //WIP - Add Bookings to User Object
-      const book = await sails.sendNativeQuery(`
-      SELECT * FROM booking where userId = 1`);
-      console.log(book.rows[0].details);
-      let abc = JSON.parse(book.rows[0].details);
-      console.log(abc);
-
-      user.booking = abc;
+      user.booking = book.details? JSON.parse(book.details) : [];
     }
-    catch(e){
+    catch (e) {
       console.log(e);
     }
-    let firstPet = await Pet.findOne({owner:user.id});
+    let firstPet = await Pet.findOne({ owner: user.id });
     user.firstPetName = firstPet.name;
     // console.log(user);
-    return res.status(200).send({statusCode: 200 ,data:user, message:"Success"});
+    return res.status(200).send({ statusCode: 200, data: user, message: "Success" });
+  },
+
+  updateUser: async (req, res) => {
+    let userId = parseInt(req.headers.user);
+    console.log(req.body);
+    let user = {};
+    user.fullName = req.body.fullName;
+    user.facilityId = req.body.facilityId;
+
+    await User.update({ id: userId }).set({ ...user }).then(() => {
+      return res.status(200).send({ statusCode: 200, data: {}, message: "Success" });
+    }).catch((err) => {
+      console.log(err);
+      return res.status(500).send({ statusCode: 500, message: 'Oops! Something went wrong' });
+    });
   }
+
+
 
 };
