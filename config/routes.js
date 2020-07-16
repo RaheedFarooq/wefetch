@@ -22,6 +22,7 @@ module.exports.routes = {
   '/': { view: 'pages/homepage' },
 
   'GET /api/user' : 'UserController.getUser',
+  'PATCH /api/user/change-password' : 'UserController.changePassword',
 
   'GET /api/company' : 'CompanyController.getCompanies',
   'GET /api/company/:id/facility' : 'FacilityController.getFacility',

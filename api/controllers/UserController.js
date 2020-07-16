@@ -27,14 +27,14 @@ module.exports = {
     }
     catch (err) {
       console.log(err);
-      if (err.code === "E_UNIQUE") return res.status(500).send({ statusCode: 500, message: 'Account already Exists' });
+      if (err.code === "E_UNIQUE") return res.status(200).send({ statusCode: 500, message: 'Account already Exists' });
 
       return res.status(500).send({ statusCode: 500, message: 'Opps! Something Went Wrong' });
     }
   },
 
   login: async (req, res) => {
-    consol.log(req.body);
+    console.log(req.body);
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
@@ -42,9 +42,11 @@ module.exports = {
     }
 
     if (await bcrypt.compare(req.body.password, user.password)) {
+    console.log(user);
+
       return res.status(200).send({
         statusCode: 200,
-        data: {},
+        data: {user},
         message: "Login Successful"
       })
     }
@@ -58,14 +60,15 @@ module.exports = {
   },
 
   getUser: async (req, res) => {
+    console.log("get User API");
 
     let userId = parseInt(req.headers.user);
 
-    if (!userId) return res.status(500).send({ statusCode: 500, message: 'Oops! Something went wrong' });
+    if (!userId) return res.status(200).send({ statusCode: 500, message: 'Oops! Something went wrong' });
 
     const user = await User.findOne({ id: userId });
 
-    if (!user) return res.status(500).send({ statusCode: 500, message: 'User does not exist.' });
+    if (!user) return res.status(200).send({ statusCode: 500, message: 'User does not exist.' });
 
     if (user.facilityId) {
       const facility = await Facility.findOne({ id: user.facilityId });
@@ -75,15 +78,17 @@ module.exports = {
     }
     try {
       const book = await Booking.findOne({ userId });
-      console.log(JSON.parse(book.details));
-
-      user.booking = book.details? JSON.parse(book.details) : [];
+      // console.log(JSON.parse(book.details));
+      user.booking = book && book.details ? JSON.parse(book.details) :
+        {
+          recurring: [], dates: []
+        };
     }
     catch (e) {
       console.log(e);
     }
     let firstPet = await Pet.findOne({ owner: user.id });
-    user.firstPetName = firstPet.name;
+    user.firstPetName =firstPet ? firstPet.name : {};
     // console.log(user);
     return res.status(200).send({ statusCode: 200, data: user, message: "Success" });
   },
@@ -99,8 +104,23 @@ module.exports = {
       return res.status(200).send({ statusCode: 200, data: {}, message: "Success" });
     }).catch((err) => {
       console.log(err);
-      return res.status(500).send({ statusCode: 500, message: 'Oops! Something went wrong' });
+      return res.status(200).send({ statusCode: 500, message: 'Oops! Something went wrong' });
     });
+  },
+
+  changePassword: async (req, res) => {
+    let userId = parseInt(req.headers.user);
+    let user = await User.findOne({ id: userId });
+    if (user && await bcrypt.compare(req.body.oldPassword, user.password)) {
+      const salt = await bcrypt.genSalt();
+      const hashPassword = await bcrypt.hash(req.body.password, salt);
+      let updatedUser = await User.update({ id: userId }).set({ password: hashPassword }).fetch();
+      if (user) {
+        return res.status(200).send({ statusCode: 200, data: {}, message: "Password Changed Succssfully" })
+      }
+      return res.status(500).send({ statusCode: 500, data: {}, message: "Something Went Wrong" });
+    }
+    return res.status(200).send({ statusCode: 400, data: {}, message: "Old Password Incorrect!" });
   }
 
 

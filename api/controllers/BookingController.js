@@ -10,14 +10,15 @@ module.exports = {
 
   createBooking: async (req, res) => {
     let userId = parseInt(req.headers.user);
-    console.log(req.body);
-    console.log(typeof req.body);
-    console.log(typeof req.body.dates);
-    console.log(typeof req.body.recurring);
+
+    // if(!req.body.dates) req.body.dates = [];
+    // if(!req.body.recurring) req.body.recurring = [];
+
     let details = JSON.stringify(req.body);
+    console.log(details);
     let booking = await Booking.findOne({ userId });
     if (booking) await Booking.update({ userId }).set({ details });
-    await Booking.create({ userId, details });
+    else { await Booking.create({ userId, details }) };
     return res.status(200).send({ statusCode: 200, data: {}, message: "Success" });
   }
 

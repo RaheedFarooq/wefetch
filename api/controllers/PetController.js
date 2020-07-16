@@ -15,9 +15,9 @@ module.exports = {
 
         pet ?
             (
-                res.status(200).send({ statusCode: '200', data: {}, message: 'Successfully created pet' })
+                res.status(200).send({ statusCode: 200, data: {}, message: 'Successfully created pet' })
             ) : (
-                res.status(500).send({ statusCode: '500', data: {}, message: 'Failed to create pet' })
+                res.status(200).send({ statusCode: 500, data: {}, message: 'Failed to create pet' })
             )
     },
 
@@ -28,9 +28,9 @@ module.exports = {
 
         pets ?
             (
-                res.status(200).send({ statusCode: '200', data: { pets }, message: 'Successfully fetched pets' })
+                res.status(200).send({ statusCode: 200, data: { pets }, message: 'Successfully fetched pets' })
             ) : (
-                res.status(500).send({ statusCode: '500', data: {}, message: 'Failed to fetch pets' })
+                res.status(200).send({ statusCode: 500, data: {}, message: 'Failed to fetch pets' })
             )
     },
 
@@ -43,9 +43,9 @@ module.exports = {
 
         pet ?
             (
-                res.status(200).send({ statusCode: '200', data: {}, message: 'Successfully updated pet' })
+                res.status(200).send({ statusCode: 200, data: {}, message: 'Successfully updated pet' })
             ) : (
-                res.status(500).send({ statusCode: '500', data: {}, message: 'Failed to update pet' })
+                res.status(500).send({ statusCode: 500, data: {}, message: 'Failed to update pet' })
             )
     },
 
@@ -56,9 +56,9 @@ module.exports = {
 
         pet ?
         (
-            res.status(200).send({ statusCode: '200', data: {}, message: 'Successfully deleted pet' })
+            res.status(200).send({ statusCode: 200, data: {}, message: 'Successfully deleted pet' })
         ) : (
-            res.status(500).send({ statusCode: '500', data: {}, message: 'Failed to delete pet' })
+            res.status(500).send({ statusCode: 500, data: {}, message: 'Failed to delete pet' })
         )
     }
 
