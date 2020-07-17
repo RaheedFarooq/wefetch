@@ -50,7 +50,6 @@ module.exports.datastores = {
     ***************************************************************************/
     adapter: 'sails-mysql',
     url: 'mysql://wefeehft_dev:devasdf123@@localhost:3306/wefeehft_wefetch_dev',
-
   },
 
 
