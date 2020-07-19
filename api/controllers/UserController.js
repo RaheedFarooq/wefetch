@@ -87,7 +87,12 @@ module.exports = {
     catch (e) {
       console.log(e);
     }
-    let firstPet = await Pet.findOne({ owner: user.id });
+    // let firstPet = await Pet.findOne({ owner: user.id });
+    let firstPet = await Pet.find({
+      where: { owner:user.id },
+      limit: 1,
+      sort: 'createdAt'
+    });
     user.firstPetName =firstPet ? firstPet.name : {};
     // console.log(user);
     return res.status(200).send({ statusCode: 200, data: user, message: "Success" });
@@ -121,6 +126,24 @@ module.exports = {
       return res.status(500).send({ statusCode: 500, data: {}, message: "Something Went Wrong" });
     }
     return res.status(200).send({ statusCode: 400, data: {}, message: "Old Password Incorrect!" });
+  },
+
+  forgotPassword: async (req, res) => {
+    if (req.body.email) {
+      user = User.findOne({ email: req.body.email });
+      if (!user) return res.status(200).send({ statusCode: 200, data: {}, message: "No User Associated with this email" });
+      else {
+        const hashEmail = await bcrypt.hash(req.body.email, 10);
+        let link = `https://devdashboard.wefetchapp.com/reset-password?r=${hashEmail}`;
+        await sails.helpers.sendForgotPasswordEmail(req.body.email,link);
+        return res.status(200).send({ statusCode: 200, data: {}, message: "Recovery Email sent!" });
+      }
+    }
+  },
+
+  getUserStatus: async (req, res) => {
+    //TODO: Check if facility has room to accept a user
+    return res.status(200).send({ statusCode: 200, data: { status: true }, message: "User Status" });
   }
 
 
