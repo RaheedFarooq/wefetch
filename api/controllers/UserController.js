@@ -99,11 +99,13 @@ module.exports = {
       console.log(e);
     }
     // let firstPet = await Pet.findOne({ owner: user.id });
-    let firstPet = await Pet.find({
-      where: { owner: user.id },
-      limit: 1,
-      sort: 'createdAt'
-    });
+    // let firstPet = await Pet.find({
+    //   where: { owner: user.id },
+    //   limit: 1,
+    //   sort: 'createdAt'
+    // });
+    let firstPet = await Pet.find({owner: user.id}).sort('createAt').limit(1);
+    
     user.firstPetName = firstPet ? (firstPet.name) : ('');
     console.log(user);
     return res.status(200).send({ statusCode: 200, data: user, message: "Success" });
