@@ -104,8 +104,8 @@ module.exports = {
       limit: 1,
       sort: 'createdAt'
     });
-    user.firstPetName = firstPet ? firstPet.name : {};
-    // console.log(user);
+    user.firstPetName = firstPet ? firstPet.name : '';
+    console.log(user);
     return res.status(200).send({ statusCode: 200, data: user, message: "Success" });
   },
 
