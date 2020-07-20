@@ -34,27 +34,38 @@ module.exports = {
   },
 
   login: async (req, res) => {
-    console.log(req.body);
-    const user = await User.findOne({ email: req.body.email });
+    try {
+      console.log(req.body);
+      const user = await User.findOne({ email: req.body.email });
 
-    if (!user) {
-      return res.status(400).send({ statusCode: 400, message: "email not associated to any Account" });
+      if (!user) {
+        return res.status(400).send({ statusCode: 400, message: "email not associated to any Account" });
+      }
+
+      if (await bcrypt.compare(req.body.password, user.password)) {
+        console.log(user);
+
+        return res.status(200).send({
+          statusCode: 200,
+          data: { user },
+          message: "Login Successful"
+        })
+      }
+      else {
+        return res.status(500).send({
+          statusCode: 500,
+          data: {},
+          message: "Invalid Password"
+        })
+      }
     }
-
-    if (await bcrypt.compare(req.body.password, user.password)) {
-    console.log(user);
-
-      return res.status(200).send({
-        statusCode: 200,
-        data: {user},
-        message: "Login Successful"
-      })
-    }
-    else {
-      return res.status(400).send({
-        statusCode: 400,
+    catch (e) {
+      console.log('error', e);
+      
+      return res.status(500).send({
+        statusCode: 500,
         data: {},
-        message: "Invalid Password"
+        message: "Something went wrong"
       })
     }
   },
@@ -89,11 +100,11 @@ module.exports = {
     }
     // let firstPet = await Pet.findOne({ owner: user.id });
     let firstPet = await Pet.find({
-      where: { owner:user.id },
+      where: { owner: user.id },
       limit: 1,
       sort: 'createdAt'
     });
-    user.firstPetName =firstPet ? firstPet.name : {};
+    user.firstPetName = firstPet ? firstPet.name : {};
     // console.log(user);
     return res.status(200).send({ statusCode: 200, data: user, message: "Success" });
   },
@@ -135,7 +146,7 @@ module.exports = {
       else {
         const hashEmail = await bcrypt.hash(req.body.email, 10);
         let link = `https://devdashboard.wefetchapp.com/reset-password?r=${hashEmail}`;
-        await sails.helpers.sendForgotPasswordEmail(req.body.email,link);
+        await sails.helpers.sendForgotPasswordEmail(req.body.email, link);
         return res.status(200).send({ statusCode: 200, data: {}, message: "Recovery Email sent!" });
       }
     }
