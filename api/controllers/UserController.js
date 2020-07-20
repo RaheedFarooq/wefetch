@@ -104,8 +104,8 @@ module.exports = {
     //   limit: 1,
     //   sort: 'createdAt'
     // });
-    let firstPet = await Pet.find({owner: user.id}).sort('createAt').limit(1);
-    
+    let firstPet = await Pet.find({owner: user.id}).sort('createdAt').limit(1);
+
     user.firstPetName = firstPet ? (firstPet.name) : ('');
     console.log(user);
     return res.status(200).send({ statusCode: 200, data: user, message: "Success" });
