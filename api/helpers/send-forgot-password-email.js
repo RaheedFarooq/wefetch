@@ -55,7 +55,9 @@ module.exports = {
         `,
     };
 
-    sgMail.send(msg);
+    sgMail.send(msg).then((res)=> {
+      console.log(res);
+    });
 
 
   }
