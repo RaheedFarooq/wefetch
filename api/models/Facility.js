@@ -9,6 +9,7 @@ module.exports = {
 
   attributes: {
     name: { type:'string', columnType:'varchar(255)' },
+    country: { type:'string', columnType:'varchar(255)' },
     city: { type:'string', columnType:'varchar(255)' },
     lat: { type: 'number', columnType: 'decimal(16,8)' },
     long: { type: 'number', columnType: 'decimal(16,8)' },
