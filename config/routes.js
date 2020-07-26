@@ -34,7 +34,15 @@ module.exports.routes = {
   'POST /api/dashboard-user/login' : 'DashboardUserController.login',
   'PUT /api/dashboard-user/updatePassword' : 'DashboardUserController.updatePassword',
   'POST /api/dashboard-user/admin1154611526' : 'DashboardUserController.createAdmin',
+  /* {
+    fullName: '',
+    email: '',
+    password: ''
+  } */
 
   'POST /api/role' : 'RoleController.create',
+  /* {
+    roleType: ''
+  } */
 
 };
