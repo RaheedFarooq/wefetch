@@ -8,34 +8,43 @@ const bcrypt = require('bcrypt');
  */
 
 module.exports = {
-  
-    signup: async (req, res) => {
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
-        const company = await Company.create({
-            name: req.body.companyName
-        }).fetch();
-        const dashboardUser = await DashboardUser.create({
-            fullName: req.body.fullName,
-            email: req.body.email,
-            password: hashedPassword,
-            companyId: company.id,
-            roleId: 200
-        }).fetch();
 
-        dashboardUser ? 
-            (
-                res.status(200).send({ statusCode: 200, data: {}, message: `Successfully created dashboard user` })
-            ) : (
-                res.status(500).send({ statusCode: 500, data: {}, message: `Failed to create dashboard user` })
-            );
+    signup: async (req, res) => {
+        const emailExists = await DashboardUser.findOne({
+            email: req.body.email
+        });
+
+        if (!emailExists) {
+            const salt = await bcrypt.genSalt();
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+            const company = await Company.create({
+                name: req.body.companyName
+            }).fetch();
+            const dashboardUser = await DashboardUser.create({
+                fullName: req.body.fullName,
+                email: req.body.email,
+                password: hashedPassword,
+                companyId: company.id,
+                roleId: 200
+            }).fetch();
+    
+    
+            dashboardUser ?
+                (
+                    res.status(200).send({ statusCode: 200, data: {}, message: `Successfully created dashboard user` })
+                ) : (
+                    res.status(500).send({ statusCode: 500, data: {}, message: `Failed to create dashboard user` })
+                );
+        } else {
+            return res.status(400).send({ statusCode: 400, data: {}, message: `Email already exists.` })
+        }
     },
 
     login: async (req, res) => {
         const dashboardUser = await DashboardUser.findOne({
             email: req.body.email
         });
-        
+
         if (!dashboardUser) {
             return res.status(400).send({ statusCode: 400, data: dashboardUser, message: `Email doesn't exist.` });
         } else {
@@ -43,12 +52,19 @@ module.exports = {
                 const role = await Role.findOne({
                     id: dashboardUser.roleId
                 });
+                const permissions = role.roleType === 100 ?
+                    (
+                        ['/dashboard', '/componay', 'pricing-plan', '/security']
+                    ) : (
+                        ['/dashboard', '/facility', '/users', 'pricing-plan', '/security']
+                    );
                 const dataObj = {
                     id: dashboardUser.id,
                     fullName: dashboardUser.fullName,
                     email: dashboardUser.email,
                     companyId: dashboardUser.companyId,
-                    role: role.roleType
+                    role: role.roleType,
+                    permissions: permissions
                 };
 
                 return res.status(200).send({ statusCode: 200, data: dataObj, message: `Successfully logged in.` });
@@ -74,8 +90,8 @@ module.exports = {
                 }).set({
                     password: hashedPassword
                 });
-    
-                updatedDashboardUser ? 
+
+                updatedDashboardUser ?
                     (
                         res.status(200).send({ statusCode: 200, data: {}, message: `Successfully updated password.` })
                     ) : (
@@ -88,22 +104,36 @@ module.exports = {
     },
 
     createAdmin: async (req, res) => {
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
-        const dashboardAdmin = await DashboardUser.create({
-            fullName: req.body.fullName,
-            email: req.body.email,
-            password: hashedPassword,
-            roleId: 100
-        }).fetch();
-        
-        dashboardAdmin ? 
-            (
-                res.status(200).send({ statusCode: 200, data: {}, message: `Successfully created admin.` })
-            ) : (
-                res.status(500).send({ statusCode: 200, data: {}, message: `Failed to create admin.` })
-            );
+        const emailExists = await DashboardUser.findOne({
+            email: req.body.email
+        });
+
+        if (!emailExists) {
+            const salt = await bcrypt.genSalt();
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+            const dashboardAdmin = await DashboardUser.create({
+                fullName: req.body.fullName,
+                email: req.body.email,
+                password: hashedPassword,
+                roleId: 100
+            }).fetch();
+
+            dashboardAdmin ?
+                (
+                    res.status(200).send({ statusCode: 200, data: {}, message: `Successfully created admin.` })
+                ) : (
+                    res.status(500).send({ statusCode: 200, data: {}, message: `Failed to create admin.` })
+                );
+        } else {
+            return res.status(400).send({ statusCode: 400, data: {}, message: `Email already exists.` })
+        }
     }
+    // Admin creation body 
+    // {
+    //   "fullName": "",
+    //   "email": "",
+    //   "password": ""
+    // } 
 
 };
 

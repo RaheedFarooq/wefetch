@@ -8,7 +8,6 @@
 module.exports = {
 
   getFacility: async (req,res) => {
-
     let facility = await Facility.find({companyId: req.params.id});
     console.log(facility);
     return res.status(200).send({
@@ -17,6 +16,10 @@ module.exports = {
       message:"Success"
     });
   },
+
+  /* Dashboard specific methods */
+
+  
 
 
 };

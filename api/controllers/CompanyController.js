@@ -8,7 +8,6 @@
 module.exports = {
 
   getCompanies: async (req,res) => {
-
     let company = await Company.find();
     console.log(company);
     return res.status(200).send({
@@ -17,6 +16,10 @@ module.exports = {
       message:"Success"
     });
   }
+
+  /* Dashboard specific methods */
+
+  
 
 };
 

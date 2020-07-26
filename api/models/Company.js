@@ -9,7 +9,33 @@ module.exports = {
 
   attributes: {
 
-    name: { type:'string', columnType:'varchar(255)' },
+    name: { 
+      type:'string', 
+      columnType:'varchar(255)',
+      allowNull: false, 
+      required: true
+    },
+
+    // dashboardUserId: {
+    //   type: 'number',
+    //   columnType: 'integer',
+    //   allowNull: false,
+    //   required: true
+    // },
+
+    pricingPlanId: {
+      type: 'number',
+      columnType: 'integer',
+      allowNull: true,
+      required: false
+    },
+
+    status: {
+      type: 'string',
+      columnType: 'varchar(255)',
+      isIn: ['approved', 'pending', 'banned'],
+      defaultsTo: 'pending'
+    }
   
   },
 
