@@ -22,6 +22,7 @@ module.exports = {
     }
     // Role creation body 
     // {
+    //   "id": 100 or 200   
     //   "roleType": "admin or client"
     // } 
 

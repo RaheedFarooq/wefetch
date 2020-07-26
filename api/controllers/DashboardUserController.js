@@ -52,11 +52,11 @@ module.exports = {
                 const role = await Role.findOne({
                     id: dashboardUser.roleId
                 });
-                const permissions = role.roleType === 100 ?
+                const permissions = role.roleType === 'admin' ?
                     (
-                        ['/dashboard', '/componay', 'pricing-plan', '/security']
+                        ['/dashboard', '/company', '/pricing-plan', '/security']
                     ) : (
-                        ['/dashboard', '/facility', '/users', 'pricing-plan', '/security']
+                        ['/dashboard', '/facility', '/users', '/pricing-plan', '/security']
                     );
                 const dataObj = {
                     id: dashboardUser.id,

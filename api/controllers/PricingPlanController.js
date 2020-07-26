@@ -10,7 +10,7 @@ module.exports = {
     createPlan: async (req, res) => {
         const pricingPlan = await PricingPlan.create({
             name: req.body.name,
-            subsciptionMode: req.body.subsciptionMode,
+            subscriptionMode: req.body.subscriptionMode,
             price: req.body.price,
             usersLimit: req.body.usersLimit
         }).fetch();
@@ -24,9 +24,9 @@ module.exports = {
     }
     // Monthly plans
     // {
-    //     "name": "basic, pro, premium, enterprise"
+    //     "name": "basic, pro, premium, enterprise",
     //     "subscriptionMode": "monthly or anually",
-    //     "price": if monthly [49, 59, 69, 79] or if annually [490, 590, 690, 790]
+    //     "price": if monthly [49, 59, 69, 79] or if annually [490, 590, 690, 790],
     //     "usersLimit": 100, 200, 300, unlimited/null
     // }
 
