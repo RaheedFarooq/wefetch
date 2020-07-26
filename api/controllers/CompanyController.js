@@ -7,14 +7,10 @@
 
 module.exports = {
 
-  getCompanies: async (req,res) => {
+  getCompanies: async (req, res) => {
     let company = await Company.find();
-    console.log(company);
-    return res.status(200).send({
-      statusCode: 200,
-      data: company,
-      message:"Success"
-    });
+
+    return res.status(200).send({ statusCode: 200, data: company, message: "Success" });
   }
 
   /* Dashboard specific methods */

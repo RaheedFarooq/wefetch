@@ -7,20 +7,15 @@
 
 module.exports = {
 
-  getFacility: async (req,res) => {
-    let facility = await Facility.find({companyId: req.params.id});
-    console.log(facility);
-    return res.status(200).send({
-      statusCode: 200,
-      data: facility,
-      message:"Success"
-    });
+  getFacility: async (req, res) => {
+    let facility = await Facility.find({ companyId: req.params.id });
+
+    return res.status(200).send({ statusCode: 200, data: facility, message: "Success" });
   },
 
   /* Dashboard specific methods */
 
   
-
 
 };
 
