@@ -42,6 +42,7 @@ module.exports.routes = {
   /* Company related APIs */
   'GET /api/company' : 'CompanyController.getCompanies',
   'GET /api/company/getCompaniesAndFacilities' : 'CompanyController.getCompaniesAndFacilities',
+  'PUT /api/company/updateCompany' : 'CompanyController.updateCompany',
 
   /* Facility related APIs */
   'GET /api/company/:id/facility' : 'FacilityController.getFacility',
