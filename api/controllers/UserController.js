@@ -144,13 +144,13 @@ module.exports = {
 
   forgotPassword: async (req, res) => {
     try {
-      if (req.params.email) {
-        user = User.findOne({ email: req.params.email });
+      if (req.query.email) {
+        user = User.findOne({ email: req.query.email });
         if (!user) return res.status(200).send({ statusCode: 200, data: {}, message: "No User Associated with this email" });
         else {
-          const hashEmail = await bcrypt.hash(req.params.email, 10);
+          const hashEmail = await bcrypt.hash(req.query.email, 10);
           let link = `https://devdashboard.wefetchapp.com/reset-password?r=${hashEmail}`;
-          await sails.helpers.sendForgotPasswordEmail(req.params.email, link);
+          await sails.helpers.sendForgotPasswordEmail(req.query.email, link);
           return res.status(200).send({ statusCode: 200, data: {}, message: "Recovery Email sent!" });
         }
       }
