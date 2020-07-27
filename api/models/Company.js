@@ -16,13 +16,6 @@ module.exports = {
       required: true
     },
 
-    // dashboardUserId: {
-    //   type: 'number',
-    //   columnType: 'integer',
-    //   allowNull: false,
-    //   required: true
-    // },
-
     pricingPlanId: {
       type: 'number',
       columnType: 'integer',

@@ -41,9 +41,13 @@ module.exports.routes = {
 
   /* Company related APIs */
   'GET /api/company' : 'CompanyController.getCompanies',
+  'GET /api/company/getCompaniesAndFacilities' : 'CompanyController.getCompaniesAndFacilities',
 
   /* Facility related APIs */
   'GET /api/company/:id/facility' : 'FacilityController.getFacility',
+  'POST /api/facility/createFacility' : 'FacilityController.createFacility',
+  'PUT /api/facility/updateFacility' : 'FacilityController.updateFacility',
+  'DELETE /api/facility/deleteFacility' : 'FacilityController.deleteFacility',
   
   /* Pricing plan related APIs */
   'POST /api/pricing-plan' : 'PricingPlanController.createPlan',
