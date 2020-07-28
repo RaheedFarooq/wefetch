@@ -10,15 +10,15 @@
 
 module.exports.routes = {
 
-  '/': { view: 'pages/homepage' },
+ '/': { view: 'pages/homepage' },
 
   /* User related APIs */
+  'GET /api/user/forgot-password' : 'UserController.forgotPassword',
   'GET /api/user' : 'UserController.getUser',
   'PATCH /api/user/change-password' : 'UserController.changePassword',
   'PATCH /api/user' : 'UserController.updateUser',
   'POST /api/user/signup' : 'UserController.signup',
   'POST /api/user/login' : 'UserController.login',
-  'GET /api/user/forget-password' : 'UserController.forgotPassword',
   'GET /api/user/get-status' : 'UserController.getUserStatus',
 
   /* Booking related APIs */

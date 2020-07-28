@@ -61,7 +61,7 @@ module.exports = {
     }
     catch (e) {
       console.log('error', e);
-      
+
       return res.status(500).send({
         statusCode: 500,
         data: {},
@@ -108,7 +108,7 @@ module.exports = {
 
     user.firstPetName = firstPet ? firstPet[0].name : '';
     console.log('getUser_user===>>>', user);
-    
+
     return res.status(200).send({ statusCode: 200, data: user, message: "Success" });
   },
 
@@ -143,15 +143,22 @@ module.exports = {
   },
 
   forgotPassword: async (req, res) => {
-    if (req.body.email) {
-      user = User.findOne({ email: req.body.email });
-      if (!user) return res.status(200).send({ statusCode: 200, data: {}, message: "No User Associated with this email" });
-      else {
-        const hashEmail = await bcrypt.hash(req.body.email, 10);
-        let link = `https://devdashboard.wefetchapp.com/reset-password?r=${hashEmail}`;
-        await sails.helpers.sendForgotPasswordEmail(req.body.email, link);
-        return res.status(200).send({ statusCode: 200, data: {}, message: "Recovery Email sent!" });
+    try {
+      if (req.query.email) {
+        user = User.findOne({ email: req.query.email });
+        if (!user) return res.status(200).send({ statusCode: 200, data: {}, message: "No User Associated with this email" });
+        else {
+          const hashEmail = await bcrypt.hash(req.query.email, 10);
+          let link = `https://devdashboard.wefetchapp.com/reset-password?r=${hashEmail}`;
+          await sails.helpers.sendForgotPasswordEmail(req.query.email, link);
+          return res.status(200).send({ statusCode: 200, data: {}, message: "Recovery Email sent!" });
+        }
       }
+      else return res.status(200).send({ statusCode: 200, data: {}, message: "No Email Received" });
+    }
+    catch (e) {
+      console.log(e);
+      return res.status(500).send({ statusCode: 500, data: {}, message: "SOmething Went Wrong" });
     }
   },
 
