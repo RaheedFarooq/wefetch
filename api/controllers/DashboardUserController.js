@@ -54,9 +54,9 @@ module.exports = {
                 });
                 const permissions = role.roleType === 'admin' ?
                     (
-                        ['/dashboard', '/company', '/pricing-plan', '/security']
+                        ['/dashboard', '/companies', '/pricing-plans', '/security']
                     ) : (
-                        ['/dashboard', '/facility', '/users', '/pricing-plan', '/security']
+                        ['/dashboard', '/facilities', '/users', '/pricing-plans', '/security']
                     );
                 const dataObj = {
                     id: dashboardUser.id,
