@@ -52,7 +52,7 @@ module.exports = {
         })
       }
       else {
-        return res.status(500).send({
+        return res.status(200).send({
           statusCode: 500,
           data: {},
           message: "Invalid Password"
