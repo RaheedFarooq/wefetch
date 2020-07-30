@@ -37,13 +37,12 @@ module.exports = {
   fn: async function (inputs) {
     // TODO
 
-    // SENDGRID_API_KEY = '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';
-    SENDGRID_API_KEY = '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';
+    SENDGRID_API_KEY = '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';  //CLIENT Sendgrid Key
     sgMail.setApiKey(SENDGRID_API_KEY);
 
     const msg = {
       to: inputs.email,
-      from: 'support@wefetch.com',
+      from: 'hello@wefetchapp.com',
       subject: 'Reset Your Password',
       html: `
       <p>Hello,</p>
@@ -55,6 +54,8 @@ module.exports = {
     };
 
     sgMail.send(msg).then((res) => {
+      console.log("success");
+      console.log(res);
     }).catch(e => console.log(e.response.body));
 
 

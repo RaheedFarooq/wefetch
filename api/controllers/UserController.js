@@ -29,7 +29,7 @@ module.exports = {
       console.log(err);
       if (err.code === "E_UNIQUE") return res.status(200).send({ statusCode: 500, message: 'Account already Exists' });
 
-      return res.status(500).send({ statusCode: 500, message: 'Opps! Something Went Wrong' });
+      return res.status(200).send({ statusCode: 500, message: 'Opps! Something Went Wrong' });
     }
   },
 
@@ -39,7 +39,7 @@ module.exports = {
       const user = await User.findOne({ email: req.body.email });
 
       if (!user) {
-        return res.status(400).send({ statusCode: 400, message: "email not associated to any Account" });
+        return res.status(200).send({ statusCode: 200, message: "email not associated to any Account" });
       }
 
       if (await bcrypt.compare(req.body.password, user.password)) {
@@ -62,7 +62,7 @@ module.exports = {
     catch (e) {
       console.log('error', e);
 
-      return res.status(500).send({
+      return res.status(200).send({
         statusCode: 500,
         data: {},
         message: "Something went wrong"
